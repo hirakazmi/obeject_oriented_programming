@@ -1,13 +1,10 @@
 class Paperboy
-attr_accessor :name, :experience, :side, :quota
-attr_reader :earnings
+attr_accessor :name, :side
+attr_reader :earnings, :quota, :experience
 
-  def initialize(name, quota, experience, side, earnings)
+  def initialize(name, side)
       @name = name
-      @quota = quota
-      @experience = experience
       @side = side
-      @earnings = earnings
   end
 
   def quota
@@ -21,13 +18,18 @@ attr_reader :earnings
       elsif @quota > my_houses
         current_earnings = my_houses * 0.25 - 2
       else @quota < my_houses
-        current_earnings = (@quota * 0.25) + (my_houses - @quota)
+        current_earnings = (@quota * 0.25) + ((my_houses - @quota) * 0.5)
       end
-    @experience = @experience + my_houses
-    @earnings = @earnings
+    @experience += my_houses
+    @earnings += current_earnings
   end
 
+  def report
+    puts "I'm #{@name}, I've delivered #{@experience} papers and I've earned $#{earnings} so far"
+  end
 
 end
 
-tak = Paperboy.new("tak", 50, 30, "even", 30)
+tommy = Paperboy.new("Tommy", "even")
+tommy.deliver(100, 220)
+puts tommy.report
