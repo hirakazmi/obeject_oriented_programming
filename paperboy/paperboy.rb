@@ -4,27 +4,27 @@ attr_reader :earnings
 
   def initialize(name, quota, experience, side, earnings)
       @name = name
-      @quota = 50
-      @experience = 0
-      @side = even
+      @quota = quota
+      @experience = experience
+      @side = side
       @earnings = earnings
   end
 
   def quota
     @quota = 50 + ((@experience/2).to_i)
-      # if @quota > 50
-      #   0.5 * @experience
-      # elsif
-      #     @experience - 2
-
   end
 
   def deliver(start_address, end_address)
     my_houses = (end_address - start_address) / 2
-    my_houses.times.each do
-      @earnings += 0.25
-    end
+      if @quota == my_houses
+        current_earnings = my_houses * 0.25
+      elsif @quota > my_houses
+        current_earnings = my_houses * 0.25 - 2
+      else @quota < my_houses
+        current_earnings = (@quota * 0.25) + (my_houses - @quota)
+      end
     @experience = @experience + my_houses
+    @earnings = @earnings
   end
 
 
